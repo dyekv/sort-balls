@@ -33,7 +33,6 @@ const  App = ()=> {
       const targetSpace = tubes[targetTube].filter(ball=>ball===0).length -1
 
       const moveBall = () => {
-        console.log('通った')
         setHistory([...history,tubes.map(tube=>[...tube])])
         const replaceTubes = tubes.map(tube=>[...tube])
         replaceTubes[picking[0]].splice(picking[1],1,0)
@@ -41,7 +40,6 @@ const  App = ()=> {
         setTubes(replaceTubes)
         setPicking([])
         setCount(count=>count+1)
-        console.log(history)
       }
 
       if(targetSpace === -1){ // 挿入先が満タンのとき
@@ -69,6 +67,7 @@ const  App = ()=> {
   }
 
   const onBack = () => {
+    setPicking([])
     setCount(count => count-1)
     const historyCopy = history.map(tubes=>tubes.map(tube=>[...tube]))
     setTubes(historyCopy[history.length-1].map(tube=>[...tube]))
