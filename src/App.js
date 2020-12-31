@@ -59,7 +59,16 @@ function App() {
   return (
     <div className="App">
       <div style={{display:'flex'}}>
-      {loading ? <p>loading...</p> :tubes.map((tube,idx)=><div className="tube" key={idx} onClick={()=>onClickTube(idx)}>{tube.map((ball,idx)=><div className="ball" style={{backgroundColor:colors[ball]}} key={idx}/>)}</div>)}
+      {loading ? <p>loading...</p> :tubes.map((tube,idx)=><div key={idx}><div 
+          className="tube" 
+          onClick={()=>onClickTube(idx)}
+        >{tube.map((ball,idx)=><div
+          className="ball"
+          style={{backgroundColor:colors[ball]}}
+          key={idx}/>)}
+        </div>
+          <div className="triangle" style={{display:idx === picking[0] ? 'block' : 'none'}}></div>
+        </div>)}
       </div>
     </div>
   );

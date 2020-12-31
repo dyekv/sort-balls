@@ -3,7 +3,7 @@
     border-radius: 5px;
     border-width: 0px 2px 2px 2px;
     padding:10px;
-    margin:30px;
+    margin:50px 30px 10px;
 }
 
 .ball{
@@ -11,4 +11,12 @@
     width:25px;
     height:25px;
     margin-top:5px;
+}
+
+.triangle{
+    width:0px;
+    margin:0 auto;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid red;
+    border-left: 10px solid transparent;  
 }
