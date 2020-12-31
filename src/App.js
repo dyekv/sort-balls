@@ -24,6 +24,7 @@ const  App = ()=> {
 
 
   const onClickTube = (targetTube)=>{
+    console.log(picking)
     if(picking.length === 0){ // 未選択のとき
       const targetBall = tubes[targetTube].findIndex(ball=>ball > 0)
       if(targetBall === -1){return null} // 全部白（空っぽ）
@@ -41,7 +42,8 @@ const  App = ()=> {
         setPicking([])
         setCount(count=>count+1)
       }
-
+      if(targetTube === picking[0]) // 選択したtubeと同じtubeをクリックしたとき
+        return null
       if(targetSpace === -1){ // 挿入先が満タンのとき
         setPicking([targetTube,0])
         return null
@@ -54,7 +56,8 @@ const  App = ()=> {
         moveBall()
         return null
       }
-      setPicking([targetTube,0])
+      const targetBall = tubes[targetTube].findIndex(ball=>ball !== 0)
+      setPicking([targetTube,targetBall])
     }
   }
 
