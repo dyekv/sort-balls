@@ -1,7 +1,8 @@
 import './App.css';
 import React,{useState,useEffect} from 'react'
 
-const allballs = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9]
+const originAllballs = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8,9,9,9,9]
+const allballs = []
 const colors = ['white','tomato','royalblue','orange','gold','lightskyblue','silver','green','pink','blueviolet']
 
 const rangeRand = (range) => Math.floor(Math.random() * range)
@@ -18,6 +19,7 @@ const  App = ()=> {
   const [loading,setLoading] = useState(true)
   const [tubes,setTubes] = useState([])
   const [picking,setPicking] = useState([])
+  const [count,setCount] = useState(0)
 
 
   const onClickTube = (targetTube)=>{
@@ -36,6 +38,7 @@ const  App = ()=> {
         replaceTubes[targetTube].splice(targetSpace,1,tubes[picking[0]][picking[1]])
         setTubes(replaceTubes)
         setPicking([])
+        setCount(count=>count+1)
       }
       if(targetSpace === -1){ // 挿入先が満タンのとき
         console.log('宛先満タン')
@@ -57,14 +60,31 @@ const  App = ()=> {
     }
   }
 
-  useEffect(()=>{
+  const onReset = () => {
+    allballs.push(...originAllballs)
+    setPicking([])
+    setCount(0)
     setTubes([...Array(11)].map(()=>[...Array(4)].map(()=>selectDefaultBall())))
+  }
+
+  const onBack = () => {
+    setCount(count => count-1)
+  }
+
+  useEffect(()=>{
+    onReset()
     setLoading(false)
   },[])
 
   return (
     <div className="App">
-      <div style={{display:'flex'}}>
+      <h1>sort balls</h1>
+      <div className="button-area">
+        <button onClick={onReset}>Reset</button>
+        <button onClick={onBack} disabled={count === 0}>Back one</button>
+      </div>
+      <div>{'move count : ' + count}</div>
+      <div className="tube-area">
       {loading ? <p>loading...</p> :tubes.map((tube,idx)=><div key={idx}><div 
           className="tube" 
           onClick={()=>onClickTube(idx)}
@@ -73,8 +93,11 @@ const  App = ()=> {
           style={{backgroundColor:colors[ball]}}
           key={idx}/>)}
         </div>
-          <div className="triangle" style={{display:idx === picking[0] ? 'block' : 'none'}}></div>
+          <div className="triangle" style={{borderBottomColor:idx === picking[0] ? 'red' : 'white'}}></div>
         </div>)}
+      </div>
+      <div>
+        create by <a href='https://twitter.com/dyekv1'>@dyekv1</a>
       </div>
     </div>
   );
