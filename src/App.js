@@ -81,6 +81,16 @@ const  App = ()=> {
     setLoading(false)
   },[])
 
+  useEffect(()=>{
+    if(loading){return null}
+    const check = tubes.map(tube=>tube[0] === tube[1] && tube[0] === tube[2] && tube[0] === tube[3])
+    const result = check.findIndex(bool => bool === false)
+    if(result === -1){
+      alert('Clear!')
+    }
+
+  },[tubes,loading])
+
   return (
     <div className="App">
       <h1>sort balls</h1>
